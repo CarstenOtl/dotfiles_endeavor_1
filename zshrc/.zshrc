@@ -26,6 +26,9 @@ zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
+# environment variables
+export QT_QPA_PLATFORMTHEME=qt6ct
+
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
