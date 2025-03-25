@@ -1,3 +1,21 @@
+#### ENV CONFIG #### 
+[env]
+TERM = "xterm-256color"
+
+
+#### WINDOW CONFIG ####
+
+[window]
+padding.x = 2
+padding.y = 2
+
+# decorations = "Buttonless"
+
+opacity = 0.8
+blur = true
+
+#### COLORS & FONTS ####
+
 [colors.bright]
 black = "#5c6370"
 blue = "#61afef"
@@ -23,16 +41,20 @@ background = "#282c34"
 foreground = "#abb2bf"
 
 [font]
+normal.family = "Hack Nerd Font"
 size = 10
 
-[font.bold]
-family = "Hack Nerd Font"
-style = "Bold"
 
-[font.italic]
-family = "Hack Nerd Font"
-style = "Italic"
+# [font.bold]
+# family = "Hack Nerd Font"
+# style = "Bold"
 
-[font.normal]
-family = "Hack Nerd Font"
-style = "Regular"
+# [font.italic]
+# family = "Hack Nerd Font"
+# style = "Italic"
+
+# [font.normal]
+# family = "Hack Nerd Font"
+# style = "Regular"
+
+
