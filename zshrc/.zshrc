@@ -103,3 +103,6 @@ unset __conda_setup
 # use vim as standard editor
 export EDITOR=`which neovim`
 # source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+#making custom scripts from ~/bin/scripts/ available
+export PATH=$HOME/bin/scripts/:$PATH
