@@ -341,10 +341,6 @@ for_window [class="Thunar"] move position center
 # compositor #
 ##############
 
-# picom: https://wiki.archlinux.org/title/Picom
-# manpage: https://man.archlinux.org/man/picom.1.en
-# The default configuration is available in /etc/xdg/picom.conf 
-
 # for custom config:
 exec --no-startup-id picom
 

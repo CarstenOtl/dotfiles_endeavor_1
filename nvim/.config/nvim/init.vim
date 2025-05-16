@@ -62,6 +62,11 @@ set mouse=a
 " set background=dark
 " colorscheme tokyonight
 colorscheme onedark
+" Disable background color for transparency
+autocmd VimEnter,ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
+autocmd VimEnter,ColorScheme * highlight NormalNC guibg=NONE ctermbg=NONE
+autocmd VimEnter,ColorScheme * highlight EndOfBuffer guibg=NONE ctermbg=NONE
+autocmd VimEnter,ColorScheme * highlight VertSplit guibg=NONE ctermbg=NONE
 
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
