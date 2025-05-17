@@ -160,7 +160,7 @@ bindsym $mod+Shift+u exec alacritty -e blueman-manager
 bindsym $mod+Shift+q kill
 
 # exit-menu
-bindsym $mod+Shift+e exec ~/.config/i3/scripts/powermenu
+bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
 # Lock the system
 # lock with a picture:
@@ -336,13 +336,15 @@ for_window [class="Thunar"] resize set 1200 1000
 for_window [class="Thunar"] move position center
 
 
-
 ##############
 # compositor #
 ##############
 
 # for custom config:
-exec --no-startup-id picom
+exec --no-startup-id sh -c "pgrep -x picom > /dev/null || picom &"
+
+# start borders
+exec_always --no-startup-id $HOME/bin/scripts/start-xborder
 
 #############################################
 # autostart applications/services on login: #
@@ -366,7 +368,7 @@ exec --no-startup-id setxkbmap us -option caps:escape
 exec --no-startup-id numlockx on
 
 # set wallpaper
-exec_always --no-startup-id feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_water_reflection.png
+# exec_always --no-startup-id feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_water_reflection.png
 
 exec --no-startup-id sleep 1 && feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_a_pink_sky.png
 
@@ -384,10 +386,7 @@ exec --no-startup-id blueman-applet
 #exec --no-startup-id xautolock -time 60 -locker "systemctl suspend"
 
 # Desktop notifications
-exec_always --no-startup-id dunst
-
-# start borders
-exec_always --no-startup-id $HOME/bin/scripts/start-xborder
+exec_always --no-startup-id dunst -config $HOME/.config/dunst/dunstrc
 
 # Autostart apps as you like
 exec --no-startup-id sleep 2 && alacritty
@@ -455,44 +454,6 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 ############################################
 # bar settings (input comes from i3blocks) #
 ############################################
-
-# Start i3bar to display a workspace bar
-# (plus the system information i3status finds out, if available)
-#bar {
-##
-#		font pango: Hack Mono 10
-#		# font pango: DejaVu Sans Mono, FontAwesome 10
-#		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-#	    	position bottom
-##	    	i3bar_command i3bar --transparency
-## it could be that you have no primary display set: set one (xrandr --output <output> --primary)
-## reference: https://i3wm.org/docs/userguide.html#_tray_output
-#		    #tray_output primary
-#		    tray_padding 0
-
-## When strip_workspace_numbers is set to yes,
-## any workspace that has a name of the form
-## “[n][:][NAME]” will display only the name.
-## strip_workspace_numbers yes
-#strip_workspace_name no
-
-#		    colors {
-#		    separator          $purple
-#		    background         $darkgrey
-#		    statusline         $white
-##                          		border 		        bg		txt		indicator
-#		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
-#		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
-#		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
-#		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
-#	}
-#}
-
-# you can add different bars for multidisplay setups on each display:
-# set output HDMI-0 to the display you want the bar, --transparency can be set.
-# Transparency needs rgba color codes to be used where the last two letters are the transparency factor see here:
-# https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
-# #08052be6 --> e6=90%
 
 
 ######################################

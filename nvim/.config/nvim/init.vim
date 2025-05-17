@@ -75,7 +75,7 @@ set nocompatible
 filetype on
 
 " set clipboard copy-paste on
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 " set font
 set guifont=Hack\ Nerd\ Font\ Mono:h11
