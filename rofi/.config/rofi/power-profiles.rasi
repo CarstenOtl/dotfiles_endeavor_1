@@ -22,9 +22,9 @@ window {
     padding:          10;
     transparency:     "real";
     width:            170px;
-    location:         east;
-    /*y-offset:       18;*/
-    /*x-offset:       850;*/
+    location:         north;
+    y-offset:         40;
+    x-offset:         100;
 }
 listview {
     lines:   4;
