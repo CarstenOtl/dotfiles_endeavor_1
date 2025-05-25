@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bash ~/.screenlayout/laptop_mode.sh
+notify-send "Switched to laptop mode"

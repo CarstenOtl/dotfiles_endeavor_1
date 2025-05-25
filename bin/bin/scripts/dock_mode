@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# kill polybar instances
+killall -q polybar
+
+while pgrep -x polybar >/dev/null; do sleep 0.1; done
+
+# xrandr for monitor support
+bash ~/.screenlayout/dock_mode.sh
+notify-send "Switched to docked mode"
+
+# load polybar
+bash ~/.config/polybar/launch &
+notify-send "Polybar loaded"
+

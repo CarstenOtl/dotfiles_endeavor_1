@@ -32,12 +32,8 @@ $ stow .
 ```
 
 ### TODO
-- [] pop up calendar for polybar
-- [] bin to set up battery saver for optimus, refresh rate etc
 - [] fix dunst 
 - [] implement notification center using dunst
 - [] power profile daemon for nvidia? or with nvidia?
-- [] Brave GPT keyring BS
-- [] switch to brave
 
 

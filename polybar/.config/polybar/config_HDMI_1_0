@@ -16,7 +16,7 @@ disabled = #6e6a86
 
 [bar/polybar]
 bottom = false
-monitor = HDMI-1-0
+monitor = HDMI-0
 
 width = 100%:-14pt
 height = 23pt

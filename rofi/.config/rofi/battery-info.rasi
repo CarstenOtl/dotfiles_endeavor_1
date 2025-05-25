@@ -1,0 +1,29 @@
+configuration {
+    show-icons: false;
+    scroll-method: 0;
+    fullscreen: false;
+}
+
+@import "~/.config/rofi/arc_dark_colors.rasi"
+
+window {
+    background-color: @background;
+    border:           0;
+    padding:          10;
+    transparency:     "real";
+    width:            350;
+    location:         north;
+    y-offset:         40;
+    x-offset:         0;
+}
+
+mainbox {
+  children: [ "message" ];
+}
+
+message {
+  padding: 5px;
+  background-color: transparent;
+  text-color: rgba (196,203,212,100%);
+  font: "Hack Nerd Font 12";
+}

@@ -187,6 +187,7 @@ bindsym F1 exec ~/.config/i3/scripts/keyhint-2
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5% && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
 # Backlight setting using dunst osc
+
 # bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh brightness_up
 # bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh brightness_down
 
@@ -330,6 +331,8 @@ for_window [class="Pavucontrol"] floating enabled
 for_window [class="Notion Calander"] floating enabled
 for_window [class="Blueman-manager"] floating enabled
 for_window [class="pavucontrol"] floating enabled
+for_window [class="Bitwarden"] floating enabled
+for_window [class="Astrill"] floating enabled
 
 for_window [class="Thunar"] floating enabled
 for_window [class="Thunar"] resize set 1200 1000
@@ -355,6 +358,9 @@ exec --no-startup-id systemctl start bluetooth.service
 
 #get auth work with polkit-gnome
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# startup keyring daemon in i3
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg
 
 # dex execute .desktop files + apps using /etc/xdg/autostart.
 # when second to i3 a DE is installed or mixed usage of i3 + xfce4 or GNOME
