@@ -154,7 +154,7 @@ bindsym $mod+Shift+m exec alacritty -e htop
 bindsym $mod+Shift+b exec alacritty -e btop
 
 # open blueman-manager 
-bindsym $mod+Shift+u exec alacritty -e blueman-manager
+bindsym $mod+Shift+u exec blueman-manager
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -169,7 +169,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -nefc 000000
 bindsym mod1+l exec i3lock -c 000000 
 
 # lock by blurring the screen:
-bindsym $mod+y exec ~/.config/i3/scripts/blur-lock
+# bindsym $mod+y exec ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -186,11 +186,6 @@ bindsym F1 exec ~/.config/i3/scripts/keyhint-2
 # Backlight control
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5% && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
-# Backlight setting using dunst osc
-
-# bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh brightness_up
-# bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh brightness_down
-
 
 # change focus
 bindsym $mod+$left focus left
@@ -292,14 +287,14 @@ bindsym $mod+Shift+p exec ~/.config/i3/scripts/power-profiles
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:"
-set $ws2 "2:"
-set $ws3 "3:󰆎"
+set $ws1 "1:"
+set $ws2 "2:󰖟"
+set $ws3 "3:"
 set $ws4 "4:"
 set $ws5 "5:"
 set $ws6 "6:"
 set $ws7 "7:󰘐"
-set $ws8 "8:"
+set $ws8 "8:"
 set $ws9 "9:"
 set $ws10 "10"
 
@@ -307,6 +302,7 @@ set $ws10 "10"
 # find class name with xprop | greo WM_Class
 assign [class="Xfce4-terminal"] $ws1
 assign [class="google-chrome"] $ws2
+assign [class="brave-browser"] $ws2
 assign [class="Spotify"] $ws4
 assign [class="thunderbird"] $ws5
 assign [class="TelegramDesktop"] $ws5
