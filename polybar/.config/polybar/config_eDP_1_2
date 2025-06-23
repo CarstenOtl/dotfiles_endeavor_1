@@ -1,3 +1,4 @@
+
 [colors]
 ;; Base
 background = #191724
@@ -16,7 +17,7 @@ disabled = #6e6a86
 
 [bar/polybar]
 bottom = false
-monitor = eDP-2
+monitor = eDP-1-2
 
 width = 100%:-20pt
 height = 30

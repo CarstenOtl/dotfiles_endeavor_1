@@ -1,3 +1,4 @@
+
 [colors]
 ;; Base
 background = #191724
@@ -8,7 +9,7 @@ foreground = #e0def4
 ;; Rose
 primary = #ebbcba
 ;; Gold
-secondary = #f6c177
+secondary = #f6c177	
 ;; Love
 alert = #eb6f92
 ;; Muted
@@ -16,11 +17,11 @@ disabled = #6e6a86
 
 [bar/polybar]
 bottom = false
-monitor = eDP-2
+monitor = HDMI-0
 
-width = 100%:-20pt
-height = 30
-offset-x = 15px
+width = 100%:-14pt
+height = 23pt
+offset-x = 10px
 offset-y = 5pt
 radius = 8
 override-redirect = true
@@ -37,15 +38,15 @@ padding-right = 3
 
 module-margin = 1
 
-#separator = |
+;separator = |
 separator-foreground = ${colors.disabled}
 
-font-0 = "Hack Nerd Font:pixelsize=12;3"
-font-1 = "Hack Nerd Font:pixelsize=12;3"
+font-0 = "Hack Nerd Font:pixelsize=10.5;2"
+font-1 = "Hack Nerd Font:pixelsize=10.5;2"
 
-modules-left = xworkspaces i3
-modules-center = systray dunst-snooze date time
-modules-right = wlan cpu memory pulseaudio temperature brightness battery powermenu
+modules-left = xworkspaces 
+modules-center = dunst-snooze systray date time powerprofile
+modules-right = wlan cpu memory pulseaudio temperature brightness powermenu
 
 cursor-click = pointer
 cursor-scroll = ns-resize

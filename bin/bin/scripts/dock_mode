@@ -6,10 +6,11 @@ killall -q polybar
 while pgrep -x polybar >/dev/null; do sleep 0.1; done
 
 # xrandr for monitor support
-bash ~/.screenlayout/dock_mode.sh
+bash ~/.screenlayout/dock_mode_nvidia.sh
 notify-send "Switched to docked mode"
 
 # load polybar
-bash ~/.config/polybar/launch &
+bash ~/.config/polybar/launch_nvidia &
 notify-send "Polybar loaded"
 
+feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_a_pink_sky.png
