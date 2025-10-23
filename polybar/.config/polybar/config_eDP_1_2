@@ -19,12 +19,12 @@ disabled = #6e6a86
 bottom = false
 monitor = eDP-1-2
 
-width = 100%:-20pt
+width = 100%
 height = 30
-offset-x = 15px
-offset-y = 5pt
-radius = 8
-override-redirect = true
+offset-x = 0 px
+offset-y = 10 pt
+radius = 1
+override-redirect = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -33,8 +33,8 @@ line-size = 3pt
 
 border-color = #00000000
 
-padding-left = 2
-padding-right = 3
+padding-left = 0
+padding-right = 2
 
 module-margin = 1
 

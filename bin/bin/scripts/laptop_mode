@@ -1,4 +1,16 @@
 #!/bin/bash
 
+# kill polybar instances
+killall -q polybar
+
+while pgrep -x polybar >/dev/null; do sleep 0.1; done
+
 bash ~/.screenlayout/laptop_mode.sh
 notify-send "Switched to laptop mode"
+
+# load polybar
+bash ~/.config/polybar/launch &
+notify-send "Polybar loaded"
+
+# feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_a_pink_sky.png
+feh --bg-fill ~/.config/backgrounds/train-sideview.png

@@ -37,8 +37,8 @@ set $right l
 
 # Set inner/outer gaps
 # gaps outer on
-gaps top 35
-gaps inner 10
+# gaps top 35
+gaps inner 15
 # gaps outer 6
 
 # show window title bars (not officially supported with i3gaps)
@@ -274,7 +274,8 @@ bindsym $mod+p exec /usr/local/bin/switch-audio-port
 bindsym XF86TouchpadToggle exec --no-startup-id xinput list-props 12 | grep "Device Enabled" | grep -q "1$" && xinput disable 12 || xinput enable 12
 
 ## App shortcuts
-bindsym $mod+w exec /usr/bin/google-chrome-stable
+# bindsym $mod+w exec /usr/bin/google-chrome-stable
+bindsym $mod+w exec /usr/bin/brave
 bindsym $mod+n exec /usr/bin/thunar
 bindsym Print exec scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
@@ -329,6 +330,7 @@ for_window [class="Blueman-manager"] floating enabled
 for_window [class="pavucontrol"] floating enabled
 for_window [class="Bitwarden"] floating enabled
 for_window [class="Astrill"] floating enabled
+for_window [class="loupe"] floating enabled
 
 for_window [class="Thunar"] floating enabled
 for_window [class="Thunar"] resize set 1200 1000
@@ -348,6 +350,9 @@ exec_always --no-startup-id $HOME/bin/scripts/start-xborder
 #############################################
 # autostart applications/services on login: #
 #############################################
+
+# env variables
+exec_always --no-startup-id source ~/.config/i3/env.sh
 
 # start bluetooth service 
 exec --no-startup-id systemctl start bluetooth.service
@@ -369,10 +374,15 @@ exec --no-startup-id setxkbmap us -option caps:escape
 # num lock activated
 exec --no-startup-id numlockx on
 
+
 # set wallpaper
 # exec_always --no-startup-id feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_water_reflection.png
-
-exec --no-startup-id feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_a_pink_sky.png
+# exec --no-startup-id feh --bg-fill ~/.config/backgrounds/a_city_skyline_with_a_pink_sky.png
+# exec --no-startup-id feh --bg-fill ~/.config/backgrounds/a_space_scene_with_planets_and_a_rocket
+# exec --no-startup-id feh --bg-fill ~/.config/backgrounds/pink-clouds.jpg
+# exec --no-startup-id feh --bg-fill ~/.config/backgrounds/math.png
+# exec --no-startup-id feh --bg-fill ~/.config/backgrounds/kitchen.png
+exec --no-startup-id feh --bg-fill ~/.config/backgrounds/train-sideview.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -393,6 +403,10 @@ exec_always --no-startup-id dunst -config $HOME/.config/dunst/dunstrc
 # Autostart apps as you like
 exec --no-startup-id sleep 2 && alacritty
 
+# load monitor environment variables
+
+exec_always --no-startup-id bash -c "source ~/.local/bin/monitors.sh"
+
 # status bar
 exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch
@@ -400,7 +414,9 @@ exec_always --no-startup-id ~/.config/polybar/launch
 # night light
 exec_always --no-startup-id redshift -O 4800 -P
 
+# custom keyboard mappings
 exec --no-startup-id xmodmap ~/.Xmodmap
+
 ##################
 # floating rules #
 ##################
