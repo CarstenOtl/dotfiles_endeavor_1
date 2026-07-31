@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# Bootstrap Pop Shell + the keyboard/window-manager config that goes with it,
+# on a fresh Ubuntu GNOME install. Safe to re-run.
+#
+# See docs/pop-shell-setup.md in the dotfiles repo for background on each step.
+set -euo pipefail
+
+if [ "${XDG_CURRENT_DESKTOP:-}" != "ubuntu:GNOME" ] && [ "${XDG_CURRENT_DESKTOP:-}" != "GNOME" ]; then
+    echo "Warning: XDG_CURRENT_DESKTOP=${XDG_CURRENT_DESKTOP:-unset} -- this doesn't look like GNOME. Pop Shell requires GNOME Shell." >&2
+fi
+
+if ! gnome-extensions list >/dev/null 2>&1 | grep -q "pop-shell@system76.com"; then
+    echo "== Installing Pop Shell build dependencies =="
+    sudo apt update
+    sudo apt install -y git make nodejs npm gnome-shell-extensions
+
+    echo "== Cloning and building Pop Shell from source =="
+    workdir="$(mktemp -d)"
+    git clone https://github.com/pop-os/shell.git "$workdir/pop-shell"
+    (cd "$workdir/pop-shell" && make local-install)
+    rm -rf "$workdir"
+else
+    echo "== Pop Shell already installed, skipping build =="
+fi
+
+echo "== Enabling Pop Shell =="
+gnome-extensions enable pop-shell@system76.com
+
+echo "== Disabling extensions that conflict with Pop Shell's tiling/keybindings =="
+gnome-extensions disable tiling-assistant@ubuntu.com 2>/dev/null || true
+gnome-extensions disable ding@rastersoft.com 2>/dev/null || true
+
+echo "== Window manager / workspace settings =="
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 8
+gsettings set org.gnome.mutter center-new-windows true
+
+echo "== Workspace switch/move keybindings (Super+1..8 / Super+Shift+1..8) =="
+for i in 1 2 3 4 5 6 7 8; do
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"
+    gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "['<Super><Shift>$i']"
+done
+
+echo "== Freeing Super+Space from the input-source switcher (rofi wants it) =="
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['XF86Keyboard']"
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Shift>XF86Keyboard']"
+
+echo "== Custom launcher keybindings (kitty, rofi) =="
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \
+    "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Launch kitty'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'kitty'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>Return'
+
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Launch rofi (drun)'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'rofi -show drun -normal-window'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>space'
+
+echo
+echo "Done. Now, from the dotfiles repo root, run:"
+echo "  stow pop-shell rofi kitty"
+echo "to symlink the Pop Shell floating-exceptions config, rofi config, and kitty config into place."
+echo "Then log out and back in for the extension changes to fully apply."

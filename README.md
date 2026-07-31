@@ -31,6 +31,12 @@ then use GNU stow to create symlinks
 $ stow .
 ```
 
+## Pop Shell (Ubuntu)
+
+See [pop-shell/.config/pop-shell/pop-shell-setup.md](pop-shell/.config/pop-shell/pop-shell-setup.md) for installing Pop
+Shell on stock Ubuntu, what `bin/bin/scripts/setup-pop-shell` configures,
+and the full keybinding reference.
+
 ### TODO
 - [] fix dunst 
 - [] implement notification center using dunst
