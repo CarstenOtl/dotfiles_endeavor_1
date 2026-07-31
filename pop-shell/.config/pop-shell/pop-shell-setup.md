@@ -10,7 +10,7 @@ has to be installed manually.
 git clone git@github.com/CarstenOtl/dotfiles_endeavor_1.git
 cd dotfiles_endeavor_1
 stow pop-shell rofi
-./bin/bin/scripts/setup-pop-shell   # or: ~/bin/scripts/setup-pop-shell after stowing `bin`
+./pop-shell/.config/pop-shell/setup-pop-shell   # or: ~/.config/pop-shell/setup-pop-shell after stowing
 ```
 
 Log out and back in once it finishes, so GNOME Shell picks up the newly
