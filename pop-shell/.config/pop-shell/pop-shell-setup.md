@@ -112,7 +112,7 @@ it resizes as you type.
 | Shortcut | Command |
 |---|---|
 | `Super+Space` | `rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi -normal-window` |
-| `Super+Shift+Space` | `~/.config/rofi/applets/bin/quicklinks.sh` — bookmark menu (Google, Gmail, YouTube, GitHub, Reddit, Twitter by default) |
+| `Super+Shift+Space` | `~/.config/rofi/applets/bin/quicklinks.sh` — bookmark menu (Google, Gmail, YouTube, GitHub, Outlook; unmatched text searches Google instead) |
 | `Super+Shift+F` | `rofi -show find -modi "find:~/.config/rofi/scripts/rofi-find.sh" -theme ... -normal-window` — global file search across `$HOME` (no need to browse into subdirs first) |
 
 ### Other GNOME defaults relevant here

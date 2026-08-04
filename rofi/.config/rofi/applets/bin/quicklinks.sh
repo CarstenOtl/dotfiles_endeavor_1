@@ -15,9 +15,9 @@ mesg="Using '$BROWSER' as web browser"
 
 if [[ ( "$theme" == *'type-1'* ) || ( "$theme" == *'type-3'* ) || ( "$theme" == *'type-5'* ) ]]; then
 	list_col='1'
-	list_row='6'
+	list_row='5'
 elif [[ ( "$theme" == *'type-2'* ) || ( "$theme" == *'type-4'* ) ]]; then
-	list_col='6'
+	list_col='5'
 	list_row='1'
 fi
 
@@ -34,15 +34,13 @@ if [[ "$layout" == 'NO' ]]; then
 	option_2=" Gmail"
 	option_3=" Youtube"
 	option_4=" Github"
-	option_5=" Reddit"
-	option_6=" Twitter"
+	option_5=" Outlook"
 else
 	option_1=""
 	option_2=""
 	option_3=""
 	option_4=""
-	option_5=""
-	option_6=""
+	option_5=""  # placeholder icon (reused Gmail's); swap for a real Outlook glyph if you use an icon theme
 fi
 
 # Rofi CMD
@@ -51,6 +49,7 @@ rofi_cmd() {
 		-theme-str 'textbox-prompt-colon {str: "";}' \
 		-theme-str "element-text {font: \"$efonts\";}" \
 		-dmenu \
+		-i \
 		-p "$prompt" \
 		-mesg "$mesg" \
 		-markup-rows \
@@ -60,7 +59,7 @@ rofi_cmd() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6" | rofi_cmd
+	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5" | rofi_cmd
 }
 
 # Execute Command
@@ -74,9 +73,7 @@ run_cmd() {
 	elif [[ "$1" == '--opt4' ]]; then
 		xdg-open 'https://www.github.com/'
 	elif [[ "$1" == '--opt5' ]]; then
-		xdg-open 'https://www.reddit.com/'
-	elif [[ "$1" == '--opt6' ]]; then
-		xdg-open 'https://www.twitter.com/'
+		xdg-open 'https://outlook.live.com/mail/'
 	fi
 }
 
@@ -98,7 +95,12 @@ case ${chosen} in
     $option_5)
 		run_cmd --opt5
         ;;
-    $option_6)
-		run_cmd --opt6
+    '')
+        # Escape / empty selection -- do nothing
+        ;;
+    *)
+        # anything else typed that doesn't match a bookmark: search it on Google
+        query="$(printf '%s' "$chosen" | jq -sRr @uri)"
+        xdg-open "https://www.google.com/search?q=${query}"
         ;;
 esac

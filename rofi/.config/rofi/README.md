@@ -56,11 +56,25 @@ theme from [adi1090x/rofi](https://github.com/adi1090x/rofi):
 ## Quicklinks (`Super+Shift+Space`)
 
 `applets/bin/quicklinks.sh` is adi1090x/rofi's bookmark-menu applet — a
-`-dmenu` list of websites that opens the pick with `xdg-open`. Defaults to
-Google, Gmail, YouTube, GitHub, Reddit, Twitter.
+`-dmenu` list of websites that opens the pick with `xdg-open`. Currently:
+Google, Gmail, YouTube, GitHub, Outlook (upstream default was Google,
+Gmail, YouTube, GitHub, Reddit, Twitter; Reddit/Twitter dropped, Outlook
+added here).
 
 - Edit the `option_N` / `run_cmd()` pairs in `applets/bin/quicklinks.sh` to
-  change the links.
+  change the links — `option_N` is the label shown in the menu, the
+  matching `--optN` branch in `run_cmd()` is the URL `xdg-open` gets. Keep
+  `list_row`/`list_col` (near the top of the script) equal to the number
+  of options, or the theme reserves blank rows/columns for missing ones.
+- Typing something that doesn't match any bookmark and pressing Enter
+  searches it on Google instead of doing nothing (`case ... *)` fallback
+  at the bottom of the script, using `jq -sRr @uri` to URL-encode the
+  query). Matching against the bookmark labels is case-insensitive
+  (`-i` flag on the `rofi -dmenu` call).
+- `applets/type-1/style-1.rasi` (the active applet theme) was edited to
+  add a real `entry` widget to the inputbar — upstream's version only had
+  a static label there, so typing did nothing at all. See the "why can't
+  I type" note in [pop-shell-setup.md](../pop-shell/pop-shell-setup.md).
 - `applets/shared/theme.bash` picks the applet theme (`type-1/style-1.rasi`
   by default) shared by all applet scripts, not just quicklinks; only
   `type-1` has been pulled in from adi1090x/rofi so far (it has 5, each
