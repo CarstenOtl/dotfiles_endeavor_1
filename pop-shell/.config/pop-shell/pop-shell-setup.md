@@ -44,7 +44,11 @@ After the script, run `stow pop-shell rofi` from the repo root (if you
 haven't already) to symlink in:
 - `pop-shell/.config/pop-shell/config.json` — floating-window exceptions
   (includes `Rofi`, so its launcher window never gets auto-tiled).
-- `rofi/.config/rofi/` — rofi themes and `config.rasi`.
+- `rofi/.config/rofi/` — rofi themes and `config.rasi`, including a
+  launcher theme pulled from [adi1090x/rofi](https://github.com/adi1090x/rofi)
+  (`launchers/type-3/style-10.rasi`, recolored to `colors/catppuccin.rasi`);
+  see `rofi/.config/rofi/README.md` for how to switch to a different style
+  from that pack.
 
 ## Why rofi needs `-normal-window`
 
@@ -92,7 +96,7 @@ it resizes as you type.
 
 | Shortcut | Command |
 |---|---|
-| `Super+Space` | `rofi -show drun -normal-window` |
+| `Super+Space` | `rofi -show drun -theme ~/.config/rofi/launchers/type-3/style-10.rasi -normal-window` |
 
 ### Other GNOME defaults relevant here
 
