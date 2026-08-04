@@ -50,6 +50,9 @@ enabled/disabled extensions.
      the adjacent monitor) on the same keys, causing intermittent
      "jumps to the first/last workspace instead of moving the window"
      behavior.
+   - `org.gnome.shell.keybindings toggle-quick-settings` (`Super+S`) —
+     GNOME's wifi/bluetooth/quick-settings panel, on the same key as Pop
+     Shell's `toggle-stacking-global`.
 8. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
 9. Registers custom launcher shortcuts for rofi: the app launcher, a
    quicklinks bookmark menu, and a global file-search menu (table below).
@@ -163,3 +166,7 @@ it resizes as you type.
   on and racing with the workspace keybindings for the same `Super+N` /
   `Super+Shift+N` keys; it activates whichever app sits Nth in the dock.
   Fix: `gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys false`.
+- **`Super+S` opens GNOME's wifi/bluetooth quick-settings panel instead of
+  toggling window stacking** — GNOME's native `toggle-quick-settings` is
+  back on the same key as Pop Shell's `toggle-stacking-global`; fix:
+  `gsettings set org.gnome.shell.keybindings toggle-quick-settings "[]"`.
