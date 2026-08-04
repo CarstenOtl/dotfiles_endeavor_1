@@ -45,6 +45,11 @@ enabled/disabled extensions.
      movement.
    - `switch-to-workspace-last` / `move-to-workspace-last` (`Super+End`
      / `Super+Shift+End`).
+   - `switch-to-workspace-left/right` (`Shift+Super+H` / `Shift+Super+L`)
+     — collided with Pop Shell's `pop-monitor-left/right` (move window to
+     the adjacent monitor) on the same keys, causing intermittent
+     "jumps to the first/last workspace instead of moving the window"
+     behavior.
 8. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
 9. Registers a custom launcher shortcut for rofi (table below).
 
@@ -90,7 +95,7 @@ it resizes as you type.
 | `Shift+arrows` (in tile-adjust mode) | Resize |
 | `Super+S` | Toggle window stacking |
 | `Ctrl+Shift+Super+arrows` | Move focused window to adjacent workspace |
-| `Shift+Super+left/right` | Move focused window to adjacent monitor |
+| `Shift+Super+left/right` / `h,l` | Move focused window to adjacent monitor |
 
 ### Workspaces (scripted)
 
@@ -141,6 +146,13 @@ it resizes as you type.
   mutter keybindings are back on; re-run `setup-pop-shell` or
   `gsettings set org.gnome.mutter.keybindings toggle-tiled-left "[]"`
   (and `toggle-tiled-right`) directly.
+- **`Shift+Super+H`/`Shift+Super+L` intermittently jump to the first/last
+  workspace instead of moving the window to the adjacent monitor** —
+  GNOME's native `switch-to-workspace-left`/`switch-to-workspace-right`
+  are bound to the same keys as Pop Shell's `pop-monitor-left/right` and
+  race with them; re-run `setup-pop-shell` or
+  `gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "[]"`
+  (and `switch-to-workspace-right`) directly.
 - **`Super+Shift+N` sometimes launches/activates an app instead of moving
   the window to workspace N** — Ubuntu Dock's app-hotkeys feature is back
   on and racing with the workspace keybindings for the same `Super+N` /
