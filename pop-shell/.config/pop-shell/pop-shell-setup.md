@@ -51,7 +51,8 @@ enabled/disabled extensions.
      "jumps to the first/last workspace instead of moving the window"
      behavior.
 8. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
-9. Registers a custom launcher shortcut for rofi (table below).
+9. Registers custom launcher shortcuts for rofi: the app launcher, a
+   quicklinks bookmark menu, and a global file-search menu (table below).
 
 After the script, run `stow pop-shell rofi` from the repo root (if you
 haven't already) to symlink in:
@@ -59,8 +60,10 @@ haven't already) to symlink in:
   (includes `Rofi`, so its launcher window never gets auto-tiled).
 - `rofi/.config/rofi/` — rofi themes and `config.rasi`, including a
   launcher theme pulled from [adi1090x/rofi](https://github.com/adi1090x/rofi)
-  (`launchers/type-2/style-3.rasi`); see `rofi/.config/rofi/README.md` for
-  how to switch to a different style from that pack.
+  (`launchers/type-2/style-3.rasi`), the same pack's `applets/` quicklinks
+  menu, and a `scripts/rofi-find.sh` global file-search script mode; see
+  `rofi/.config/rofi/README.md` for how to switch styles or edit the
+  quicklinks bookmarks.
 
 ## Why rofi needs `-normal-window`
 
@@ -109,6 +112,8 @@ it resizes as you type.
 | Shortcut | Command |
 |---|---|
 | `Super+Space` | `rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi -normal-window` |
+| `Super+Shift+Space` | `~/.config/rofi/applets/bin/quicklinks.sh` — bookmark menu (Google, Gmail, YouTube, GitHub, Reddit, Twitter by default) |
+| `Super+Shift+F` | `rofi -show find -modi "find:~/.config/rofi/scripts/rofi-find.sh" -theme ... -normal-window` — global file search across `$HOME` (no need to browse into subdirs first) |
 
 ### Other GNOME defaults relevant here
 

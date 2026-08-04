@@ -52,3 +52,39 @@ theme from [adi1090x/rofi](https://github.com/adi1090x/rofi):
    window/file search too, add `,run,filebrowser,window` to its `modi`
    line — `Ctrl+Tab` will cycle modes even without a visible switcher
    button.
+
+## Quicklinks (`Super+Shift+Space`)
+
+`applets/bin/quicklinks.sh` is adi1090x/rofi's bookmark-menu applet — a
+`-dmenu` list of websites that opens the pick with `xdg-open`. Defaults to
+Google, Gmail, YouTube, GitHub, Reddit, Twitter.
+
+- Edit the `option_N` / `run_cmd()` pairs in `applets/bin/quicklinks.sh` to
+  change the links.
+- `applets/shared/theme.bash` picks the applet theme (`type-1/style-1.rasi`
+  by default) shared by all applet scripts, not just quicklinks; only
+  `type-1` has been pulled in from adi1090x/rofi so far (it has 5, each
+  with a few styles).
+- `applets/shared/colors.rasi` / `fonts.rasi` — same pattern as the
+  launcher: colors via `colors/catppuccin.rasi`, font `Hack Nerd Font`.
+  `quicklinks.sh` itself also hardcodes an `efonts` variable for the
+  option text size — keep it in sync with `shared/fonts.rasi` if you
+  change fonts.
+- `-normal-window` was added to `quicklinks.sh`'s `rofi_cmd()` for the
+  same Wayland keyboard-focus reason as the main launcher (see
+  [pop-shell-setup.md](../pop-shell/pop-shell-setup.md)); don't remove it.
+
+## Global file search (`Super+Shift+F`)
+
+`scripts/rofi-find.sh` is a small [rofi script
+mode](https://man.archlinux.org/man/rofi-script.5) — not from
+adi1090x/rofi, written for this repo. rofi's own `-show filebrowser`
+only lists one directory at a time; this instead dumps every file under
+`$HOME` up front (via `locate` if installed, `find` otherwise) so rofi's
+built-in fuzzy filter can match across the whole tree as you type, no
+need to navigate into subdirs. Selecting a result opens it with
+`xdg-open`.
+
+Install `plocate` (`sudo apt install plocate`) for instant, indexed
+results — without it, the script falls back to a live `find` that takes
+a few seconds on a large home directory.
