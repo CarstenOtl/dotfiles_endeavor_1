@@ -41,6 +41,9 @@ for i in 1 2 3 4 5 6 7 8; do
     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "['<Super><Shift>$i']"
 done
 
+echo "== Disabling Ubuntu Dock's Super+number app-hotkeys (conflicts with workspace keys above) =="
+gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys false 2>/dev/null || true
+
 echo "== Freeing Super+Space from the input-source switcher (rofi wants it) =="
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['XF86Keyboard']"
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Shift>XF86Keyboard']"

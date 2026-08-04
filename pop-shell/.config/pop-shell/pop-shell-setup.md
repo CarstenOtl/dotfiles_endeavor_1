@@ -33,8 +33,12 @@ enabled/disabled extensions.
    (`center-new-windows true`) — the latter matters because rofi (below)
    runs in a mode that hands window placement to Mutter.
 5. Binds workspace switch/move to `Super+1..8` / `Super+Shift+1..8`.
-6. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
-7. Registers a custom launcher shortcut for rofi (table below).
+6. Disables Ubuntu Dock's `Super+1..9` app-hotkeys feature
+   (`org.gnome.shell.extensions.dash-to-dock hot-keys`), which otherwise
+   steals those same shortcuts to launch/activate the Nth app pinned to
+   the dock instead of switching/moving to a workspace.
+7. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
+8. Registers a custom launcher shortcut for rofi (table below).
 
 After the script, run `stow pop-shell rofi` from the repo root (if you
 haven't already) to symlink in:
@@ -114,3 +118,8 @@ it resizes as you type.
 - **Super+arrow shortcuts do the wrong thing** — check
   `gnome-extensions list --enabled` for `tiling-assistant@ubuntu.com`; if
   it's back on, disable it again.
+- **`Super+Shift+N` sometimes launches/activates an app instead of moving
+  the window to workspace N** — Ubuntu Dock's app-hotkeys feature is back
+  on and racing with the workspace keybindings for the same `Super+N` /
+  `Super+Shift+N` keys; it activates whichever app sits Nth in the dock.
+  Fix: `gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys false`.
