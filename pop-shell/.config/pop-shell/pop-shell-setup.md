@@ -118,6 +118,13 @@ it resizes as you type.
 - **`ding@rastersoft.com` desktop icons come back after being disabled** — it
   can silently re-enable itself; re-run `setup-pop-shell` or
   `gnome-extensions disable ding@rastersoft.com` directly.
+- **rofi's `window` mode doesn't list all open windows** — rofi (like
+  `wmctrl`) enumerates windows via X11's `_NET_CLIENT_LIST`, which under
+  GNOME Wayland only sees XWayland-backed windows, not native Wayland
+  clients. There's no reliable external fix (GNOME Shell's `Eval` D-Bus
+  method, the only way to query its real window list, is disabled by
+  default). Use Pop Shell's own launcher (`Super+/`) for window search
+  instead — it reads Mutter's native window list and sees everything.
 - **Super+arrow shortcuts do the wrong thing** — check
   `gnome-extensions list --enabled` for `tiling-assistant@ubuntu.com`; if
   it's back on, disable it again.
