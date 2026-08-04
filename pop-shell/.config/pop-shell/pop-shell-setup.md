@@ -37,8 +37,16 @@ enabled/disabled extensions.
    (`org.gnome.shell.extensions.dash-to-dock hot-keys`), which otherwise
    steals those same shortcuts to launch/activate the Nth app pinned to
    the dock instead of switching/moving to a workspace.
-7. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
-8. Registers a custom launcher shortcut for rofi (table below).
+7. Disables GNOME's native window-tiling and workspace-jump shortcuts that
+   overlap with Pop Shell's own keys:
+   - `org.gnome.mutter.keybindings toggle-tiled-left/right` (`Super+Left`
+     / `Super+Right`) — GNOME's built-in half-screen snap tiling, which
+     otherwise steals the same keys Pop Shell uses for tiled-window focus
+     movement.
+   - `switch-to-workspace-last` / `move-to-workspace-last` (`Super+End`
+     / `Super+Shift+End`).
+8. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
+9. Registers a custom launcher shortcut for rofi (table below).
 
 After the script, run `stow pop-shell rofi` from the repo root (if you
 haven't already) to symlink in:
@@ -128,6 +136,11 @@ it resizes as you type.
 - **Super+arrow shortcuts do the wrong thing** — check
   `gnome-extensions list --enabled` for `tiling-assistant@ubuntu.com`; if
   it's back on, disable it again.
+- **`Super+Left`/`Super+Right` snap the window to a half-screen instead of
+  moving focus** — GNOME's native `toggle-tiled-left`/`toggle-tiled-right`
+  mutter keybindings are back on; re-run `setup-pop-shell` or
+  `gsettings set org.gnome.mutter.keybindings toggle-tiled-left "[]"`
+  (and `toggle-tiled-right`) directly.
 - **`Super+Shift+N` sometimes launches/activates an app instead of moving
   the window to workspace N** — Ubuntu Dock's app-hotkeys feature is back
   on and racing with the workspace keybindings for the same `Super+N` /
