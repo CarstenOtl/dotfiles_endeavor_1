@@ -58,7 +58,7 @@ inputbar {
     border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
-    children:                    [ "textbox-prompt-colon", "prompt"];
+    children:                    [ "textbox-prompt-colon", "entry"];
 }
 
 textbox-prompt-colon {
@@ -70,12 +70,15 @@ textbox-prompt-colon {
     background-color:            @urgent;
     text-color:                  @background;
 }
-prompt {
+entry {
     enabled:                     true;
     padding:                     10px;
     border-radius:               0px;
     background-color:            @active;
     text-color:                  @background;
+    placeholder:                 "Quick Links";
+    placeholder-color:           inherit;
+    cursor:                      text;
 }
 
 /*****----- Message -----*****/
