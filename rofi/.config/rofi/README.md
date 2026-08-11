@@ -88,6 +88,17 @@ added here).
   same Wayland keyboard-focus reason as the main launcher (see
   [pop-shell-setup.md](../pop-shell/pop-shell-setup.md)); don't remove it.
 
+## Input language picker (`Ctrl+Super+L`)
+
+`applets/bin/input-lang.sh` — same quicklinks-applet pattern as above,
+sized to 3 rows instead of 6, options `en`/`de`/`zh` instead of
+bookmarks. Picking one shells out to `~/bin/scripts/input-lang-en/de/zh`
+to actually switch the input source; see
+[pop-shell-setup.md](../pop-shell/pop-shell-setup.md) for why it's
+`ibus engine`-based rather than `setxkbmap`/`gsettings`, and for how
+`Ctrl+Super+L` was checked against Pop Shell's and GNOME's default
+keybindings before picking it.
+
 ## Global file search (`Super+Shift+F`)
 
 `scripts/rofi-find.sh` is a small [rofi script

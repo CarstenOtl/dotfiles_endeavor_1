@@ -57,16 +57,20 @@ echo "== Freeing Super+Space from the input-source switcher (rofi wants it) =="
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['XF86Keyboard']"
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Shift>XF86Keyboard']"
 
-echo "== Custom launcher keybindings (kitty, rofi drun, rofi quicklinks, rofi global file search) =="
+echo "== Registering input sources for the rofi language switcher (bin/scripts/input-lang-*) =="
+gsettings set org.gnome.desktop.input-sources sources \
+    "[('xkb', 'us'), ('xkb', 'de'), ('ibus', 'libpinyin')]"
+
+echo "== Custom launcher keybindings (kitty, rofi drun, rofi quicklinks, rofi global file search, rofi input language picker) =="
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings \
-    "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+    "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/']"
 
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Launch kitty'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'kitty'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>Return'
 
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Launch rofi (drun)'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi -normal-window'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'bash -c "PATH=$HOME/bin/scripts:$PATH exec rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi -normal-window"'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>space'
 
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ name 'Rofi quicklinks'
@@ -77,8 +81,13 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ command 'rofi -show find -modi "find:~/.config/rofi/scripts/rofi-find.sh" -theme ~/.config/rofi/launchers/type-2/style-3.rasi -normal-window'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ binding '<Super><Shift>f'
 
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ name 'Rofi input language picker'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ command "$HOME/.config/rofi/applets/bin/input-lang.sh"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ binding '<Primary><Super>l'
+
 echo
 echo "Done. Now, from the dotfiles repo root, run:"
-echo "  stow pop-shell rofi kitty"
-echo "to symlink the Pop Shell floating-exceptions config, rofi config, and kitty config into place."
+echo "  stow pop-shell rofi kitty bin"
+echo "to symlink the Pop Shell floating-exceptions config, rofi config, kitty config, and"
+echo "~/bin/scripts (input-lang-en/de/zh, etc.) into place."
 echo "Then log out and back in for the extension changes to fully apply."

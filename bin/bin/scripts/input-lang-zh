@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Switch the active input source to Chinese (Pinyin, via ibus-libpinyin).
+# Meant to be run by name from rofi's "run" mode (Super+Space, Ctrl+Tab
+# to cycle into run) -- see rofi/.config/rofi/README.md.
+#
+# Chinese has no plain xkb layout the way English/German do -- typing
+# characters needs an IME, so this switches to the libpinyin engine
+# rather than an xkb:cn layout. Requires ibus-libpinyin to be installed.
+
+ibus engine libpinyin
+notify-send -t 1500 -i input-keyboard "Input source" "Chinese (Pinyin)"

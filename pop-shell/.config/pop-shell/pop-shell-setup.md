@@ -56,6 +56,11 @@ enabled/disabled extensions.
 8. Frees `Super+Space` from GNOME's input-source switcher so rofi can use it.
 9. Registers custom launcher shortcuts for rofi: the app launcher, a
    quicklinks bookmark menu, and a global file-search menu (table below).
+10. Registers three input sources (`org.gnome.desktop.input-sources
+    sources`) -- English (xkb `us`), German (xkb `de`), and Chinese Pinyin
+    (ibus `libpinyin`) -- so the `input-lang-en/de/zh` scripts (below) have
+    something to switch between and GNOME's panel indicator shows the
+    right label.
 
 After the script, run `stow pop-shell rofi` from the repo root (if you
 haven't already) to symlink in:
@@ -114,9 +119,82 @@ it resizes as you type.
 
 | Shortcut | Command |
 |---|---|
-| `Super+Space` | `rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi -normal-window` |
+| `Super+Space` | `bash -c "PATH=$HOME/bin/scripts:$PATH exec rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi -normal-window"` |
 | `Super+Shift+Space` | `~/.config/rofi/applets/bin/quicklinks.sh` — bookmark menu (Google, Gmail, YouTube, GitHub, Outlook; unmatched text searches Google instead) |
 | `Super+Shift+F` | `rofi -show find -modi "find:~/.config/rofi/scripts/rofi-find.sh" -theme ... -normal-window` — global file search across `$HOME` (no need to browse into subdirs first) |
+| `Ctrl+Super+L` | `~/.config/rofi/applets/bin/input-lang.sh` — input language picker (`en`/`de`/`zh`), see below |
+
+### Input language switcher (`Ctrl+Super+L`)
+
+`applets/bin/input-lang.sh` is a quicklinks-style rofi dmenu applet:
+`Ctrl+Super+L` pops up a 3-row list (`en`/`de`/`zh`), picking one switches
+the active input source immediately. `<Primary><Super>l` was checked
+against Pop Shell's own default keybindings (`tile-swap-right` is plain
+`<Primary>l`, not `<Primary><Super>l`) and GNOME's `wm.keybindings` /
+`mutter.keybindings` / `shell.keybindings` / `media-keys` schemas before
+picking it — nothing else claims it.
+
+Each option shells out to one of `input-lang-en/de/zh` (see below) rather
+than calling `ibus engine` inline, so there's one place that owns the
+engine ids.
+
+#### The underlying scripts
+
+`bin/bin/scripts/input-lang-en/de/zh` (stowed to `~/bin/scripts/`) each
+just run `ibus engine <id>` plus a `notify-send` for feedback:
+
+| Command | Switches to |
+|---|---|
+| `input-lang-en` | English (US) — xkb `us` |
+| `input-lang-de` | German — xkb `de` |
+| `input-lang-zh` | Chinese (Pinyin) — ibus `libpinyin` |
+
+`ibus engine` (not `setxkbmap` or `gsettings set
+org.gnome.desktop.input-sources current N`) is what actually works here:
+this is a Wayland session, so Mutter owns the keymap and `setxkbmap` is a
+no-op; and while GNOME Shell exposes the active source as
+`org.gnome.desktop.input-sources current`, *writing* that key doesn't
+trigger a real switch — `gsettings get` after setting it still showed the
+old index. `ibus engine <id>` talks straight to the same ibus-daemon
+GNOME Shell itself starts (`ibus-daemon --panel disable`) and GNOME
+Shell's panel indicator listens for IBus's engine-changed signal, so the
+panel label updates correctly too. Chinese has no plain xkb layout the
+way English/German do — typing characters needs an IME — hence
+`ibus-libpinyin`'s `libpinyin` engine instead of an `xkb:cn` layout.
+`setup-pop-shell` registers all three sources
+(`org.gnome.desktop.input-sources sources`) so they're known to GNOME
+and `ibus engine` can find them by id.
+
+These are also directly runnable: `Super+Space` prepends
+`PATH=$HOME/bin/scripts:$PATH` before exec'ing rofi (`~/bin/scripts`
+being on `$PATH` in a terminal via `.zshrc`/`.bashrc` isn't enough here —
+`Super+Space` is launched by `gnome-settings-daemon` with the graphical
+session's environment, which never sources those rc files), so
+`Ctrl+Tab`-ing into `run` mode and typing `input-lang-de` still works —
+kept as a fallback now that `input-lang.sh` is the normal way to switch.
+
+| Command | Switches to |
+|---|---|
+| `input-lang-en` | English (US) — xkb `us` |
+| `input-lang-de` | German — xkb `de` |
+| `input-lang-zh` | Chinese (Pinyin) — ibus `libpinyin` |
+
+Each just runs `ibus engine <id>` plus a `notify-send` for feedback.
+`ibus engine` (not `setxkbmap` or `gsettings set
+org.gnome.desktop.input-sources current N`) is what actually works here:
+this is a Wayland session, so Mutter owns the keymap and `setxkbmap` is a
+no-op; and while GNOME Shell exposes the active source as
+`org.gnome.desktop.input-sources current`, *writing* that key doesn't
+trigger a real switch — `gsettings get` after setting it still showed the
+old index. `ibus engine <id>` talks straight to the same ibus-daemon
+GNOME Shell itself starts (`ibus-daemon --panel disable`) and GNOME
+Shell's panel indicator listens for IBus's engine-changed signal, so the
+panel label updates correctly too. Chinese has no plain xkb layout the
+way English/German do — typing characters needs an IME — hence
+`ibus-libpinyin`'s `libpinyin` engine instead of an `xkb:cn` layout.
+`setup-pop-shell` registers all three sources
+(`org.gnome.desktop.input-sources sources`) so they're known to GNOME
+and `ibus engine` can find them by id.
 
 ### Other GNOME defaults relevant here
 

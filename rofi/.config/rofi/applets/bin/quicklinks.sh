@@ -13,94 +13,101 @@ theme="$type/$style"
 prompt='Quick Links'
 mesg="Using '$BROWSER' as web browser"
 
-if [[ ( "$theme" == *'type-1'* ) || ( "$theme" == *'type-3'* ) || ( "$theme" == *'type-5'* ) ]]; then
-	list_col='1'
-	list_row='5'
-elif [[ ( "$theme" == *'type-2'* ) || ( "$theme" == *'type-4'* ) ]]; then
-	list_col='5'
-	list_row='1'
+if [[ ("$theme" == *'type-1'*) || ("$theme" == *'type-3'*) || ("$theme" == *'type-5'*) ]]; then
+  list_col='1'
+  list_row='6'
+elif [[ ("$theme" == *'type-2'*) || ("$theme" == *'type-4'*) ]]; then
+  list_col='6'
+  list_row='1'
 fi
 
-if [[ ( "$theme" == *'type-1'* ) || ( "$theme" == *'type-5'* ) ]]; then
-	efonts="Hack Nerd Font 10"
+if [[ ("$theme" == *'type-1'*) || ("$theme" == *'type-5'*) ]]; then
+  efonts="Hack Nerd Font 10"
 else
-	efonts="Hack Nerd Font 28"
+  efonts="Hack Nerd Font 28"
 fi
 
 # Options
-layout=`cat ${theme} | grep 'USE_ICON' | cut -d'=' -f2`
+layout=$(cat ${theme} | grep 'USE_ICON' | cut -d'=' -f2)
 if [[ "$layout" == 'NO' ]]; then
-	option_1=" Google"
-	option_2=" Gmail"
-	option_3=" Youtube"
-	option_4=" Github"
-	option_5=" Outlook"
+  option_1="󰴢 Outlook"
+  option_2=" Github"
+  option_3=" Youtube"
+  option_4=" Excel"
+  option_5="󰀸 iCloud"
+  option_6=" Google Drive"
 else
-	option_1=""
-	option_2=""
-	option_3=""
-	option_4=""
-	option_5=""  # placeholder icon (reused Gmail's); swap for a real Outlook glyph if you use an icon theme
+  option_1="󰴢"
+  option_2=""
+  option_3=""
+  option_4=""
+  option_5="󰀸"
+  option_6=""
 fi
 
 # Rofi CMD
 rofi_cmd() {
-	rofi -theme-str "listview {columns: $list_col; lines: $list_row;}" \
-		-theme-str 'textbox-prompt-colon {str: "";}' \
-		-theme-str "element-text {font: \"$efonts\";}" \
-		-dmenu \
-		-i \
-		-p "$prompt" \
-		-mesg "$mesg" \
-		-markup-rows \
-		-normal-window \
-		-theme ${theme}
+  rofi -theme-str "listview {columns: $list_col; lines: $list_row;}" \
+    -theme-str 'textbox-prompt-colon {str: "";}' \
+    -theme-str "element-text {font: \"$efonts\";}" \
+    -dmenu \
+    -i \
+    -p "$prompt" \
+    -mesg "$mesg" \
+    -markup-rows \
+    -normal-window \
+    -theme ${theme}
 }
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5" | rofi_cmd
+  echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6" | rofi_cmd
 }
 
 # Execute Command
 run_cmd() {
-	if [[ "$1" == '--opt1' ]]; then
-		xdg-open 'https://www.google.com/'
-	elif [[ "$1" == '--opt2' ]]; then
-		xdg-open 'https://mail.google.com/'
-	elif [[ "$1" == '--opt3' ]]; then
-		xdg-open 'https://www.youtube.com/'
-	elif [[ "$1" == '--opt4' ]]; then
-		xdg-open 'https://www.github.com/'
-	elif [[ "$1" == '--opt5' ]]; then
-		xdg-open 'https://outlook.live.com/mail/'
-	fi
+  if [[ "$1" == '--opt1' ]]; then
+    xdg-open 'https://outlook.cloud.microsoft/mail/'
+  elif [[ "$1" == '--opt2' ]]; then
+    xdg-open 'https://www.github.com/'
+  elif [[ "$1" == '--opt3' ]]; then
+    xdg-open 'https://www.youtube.com/'
+  elif [[ "$1" == '--opt4' ]]; then
+    xdg-open 'https://www.office.com/launch/excel'
+  elif [[ "$1" == '--opt5' ]]; then
+    xdg-open 'https://www.icloud.com/'
+  elif [[ "$1" == '--opt6' ]]; then
+    xdg-open 'https://drive.google.com/'
+  fi
 }
 
 # Actions
 chosen="$(run_rofi)"
 case ${chosen} in
-    $option_1)
-		run_cmd --opt1
-        ;;
-    $option_2)
-		run_cmd --opt2
-        ;;
-    $option_3)
-		run_cmd --opt3
-        ;;
-    $option_4)
-		run_cmd --opt4
-        ;;
-    $option_5)
-		run_cmd --opt5
-        ;;
-    '')
-        # Escape / empty selection -- do nothing
-        ;;
-    *)
-        # anything else typed that doesn't match a bookmark: search it on Google
-        query="$(printf '%s' "$chosen" | jq -sRr @uri)"
-        xdg-open "https://www.google.com/search?q=${query}"
-        ;;
+$option_1)
+  run_cmd --opt1
+  ;;
+$option_2)
+  run_cmd --opt2
+  ;;
+$option_3)
+  run_cmd --opt3
+  ;;
+$option_4)
+  run_cmd --opt4
+  ;;
+$option_5)
+  run_cmd --opt5
+  ;;
+$option_6)
+  run_cmd --opt6
+  ;;
+'')
+  # Escape / empty selection -- do nothing
+  ;;
+*)
+  # anything else typed that doesn't match a bookmark: search it on Google
+  query="$(printf '%s' "$chosen" | jq -sRr @uri)"
+  xdg-open "https://www.google.com/search?q=${query}"
+  ;;
 esac
